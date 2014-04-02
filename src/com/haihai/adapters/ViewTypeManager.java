@@ -1,21 +1,20 @@
 package com.haihai.adapters;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import android.view.View;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewTypeManager {
  
-	Map<String, ViewTypeController> types = new HashMap<String, ViewTypeController >();
+	List<ViewTypeController> types = new ArrayList< ViewTypeController >();
 	private static int typeCount = 0;
 	/**
 	 * 
 	 * @param viewTypeController
 	 */
 	public void registViewType(ViewTypeController viewTypeController) {
-		types.put(viewTypeController.getName(), viewTypeController);
-		typeCount ++;
+		viewTypeController.setID(types.size()-1);
+		types.add(viewTypeController);
+		typeCount = types.size();
 	}
 	
 	/**
@@ -26,14 +25,6 @@ public class ViewTypeManager {
 		return typeCount;
 	}
 	
-	/**
-	 * Get the given type view with the given data
-	 * @param typeName
-	 * @param data
-	 * @return
-	 */
-	public View getTypeView(String typeName, Object data){
-		return types.get(typeName).getView(data);
-	}
+	
 
 }
