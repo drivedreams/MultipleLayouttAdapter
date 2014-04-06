@@ -8,17 +8,21 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 public class MutipleLayoutAdapter extends BaseAdapter {
-	List<ViewTypeController> rows = new ArrayList<ViewTypeController>();
-	ViewTypeManager viewTypeManager = new ViewTypeManager();
+	List<DefaultView> rows = new ArrayList<DefaultView>();
+
+	public MutipleLayoutAdapter(List<DefaultView> rows) {
+		super();
+		this.rows = rows;
+	}
 
 	@Override
 	public int getCount() {
-		return viewTypeManager.getTypeCount();
+		return rows.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return position;
+		return rows.get(position);
 	}
 
 	@Override
@@ -46,16 +50,20 @@ public class MutipleLayoutAdapter extends BaseAdapter {
 	@Override
 	public int getItemViewType(int position) {
 
-		rows.get(position).getID();
-		return super.getItemViewType(position);
+		return rows.get(position).getTypeID();
 	}
 
 	@Override
 	public int getViewTypeCount() {
 
-		return viewTypeManager.getTypeCount();
+		return ViewTypeManager.getTypeCount();
 	}
 	
+	/**
+	 * 
+	 * @author zhanghaihai (drivedreams@163.com)
+	 *
+	 */
 	private static class ItemHolder {
 		View item;
 		/**
@@ -63,5 +71,15 @@ public class MutipleLayoutAdapter extends BaseAdapter {
 		 */
 		int position;
 	}
-
+	
+	/**
+	 * You should use this method to ad a new row to the adapter. 
+	 * It will register the view as a type to the view manager, if it has not been register.
+	 * @param view
+	 */
+	public void addRow(DefaultView row){
+		ViewTypeManager.registerViewType(row);
+		rows.add(row);
+	}
+	 
 }
